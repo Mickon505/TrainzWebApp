@@ -49,17 +49,17 @@ document.onkeydown = (e) => {
     switch(e.key){
         case "e":
             console.log("Train Status: Idle");
-            //stop();
+            stop();
         break;
 
         case "w":
             console.log("Train Status: Going Forward");
-            //start();
+            start();
         break;
 
         case "s":
             console.log("Train Status: Going Backwards");
-            //reverse();
+            reverse();
         break;
     }
 }
