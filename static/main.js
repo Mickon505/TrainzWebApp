@@ -44,3 +44,22 @@ function reverse(){
         }
     })
 }
+
+document.onkeydown = (e) => {
+    switch(e.key){
+        case "e":
+            console.log("Train Status: Idle");
+            //stop();
+        break;
+
+        case "w":
+            console.log("Train Status: Going Forward");
+            //start();
+        break;
+
+        case "s":
+            console.log("Train Status: Going Backwards");
+            //reverse();
+        break;
+    }
+}
