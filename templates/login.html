@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>TrainzController</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fonts/material-icons.min.css">
+    <link rel="stylesheet" href="../static/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<body>
+    <section class="login-clean">
+        <form class="f" method="POST" action="" enctype="multipart/form-data">
+        <!-- <div class="f"> -->
+            {% if session.logged %}
+            <div class="illustration-grn"><i style="font-family: 'Material Icons'; font-style: normal;">check_circle</i>
+                <h1>Success</h1>
+            </div>
+            {% else %}
+            <div class="illustration"><i style="font-family: 'Material Icons'; font-style: normal;">train</i>
+                <h1>Login to TrainZ</h1>
+            </div>
+            {% endif %}
+            <div class="mb-3"><input class="form-control" type="text" id="name" placeholder="Username" required></div>
+            <div class="mb-3"><input class="form-control" type="password" id="pass" placeholder="Password" required></div>
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" onclick="login();">Log In</button></div>
+            {% if error %}
+            <a class="forgot" style="color: red;">{{ error }}</a>
+            {% endif %}
+        <!-- </div> -->
+        </form>
+    </section>
+
+    {% if session.logged %}
+        <script>
+            setTimeout(function(){
+                console.log("redirecting...");
+                window.location = "/control";  
+            }, 1000);
+        </script>
+    {% endif %}
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="../static/js/log.js"></script>
+</body>
+
+</html>
