@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrainzController</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/fonts/font-awesome.min.css">
@@ -12,34 +12,52 @@
 </head>
 
 <body>
-    <label class="switch">
-        <input type="checkbox" id="chckbx">
-        <span class="slider round"></span>
-    </label>
-    <h1 class="controller-font">(D) Rail Road Switch</h1>
+    <div class="row" id="1stRow" style="max-width: 460px;">
+        <div class="col">
+            <label class="switch">
+                <input type="checkbox" id="chckbx">
+                <span class="slider round"></span>
+            </label>
+            <h1 class="controller-font">(D) Rail Road Switch</h1>
+            
+            <div class="container" style="float: left;">
+        
+                <div class="row">
+                    <div class="col" id="forward">
+                        <h1 class="fa fa-chevron-up remote-control" style="font-size: xxx-large;"></h1>
+                        <h1 class="controller-font">(W) Forward</h1>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col" id="idle">
+                        <i class="fa fa-square remote-control" style="font-size: xxx-large; padding-left: 4px;"></i>
+                        <h1 class="controller-font">(Space) Stop</h1>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col" id="backwards">
+                        <i class="fa fa-chevron-down remote-control" style="font-size: xxx-large;"></i>
+                        <h1 class="controller-font">(S) Backwards</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col" id="iframediv" style="float: left; max-width: 560px; background-color: #212529; width: 150%;">
+            <p style="display: inline-block; color: white; padding-left: 5px; margin-bottom: 0;">Live Feed 🔴</p>
+            <p style="color: #ccc; float: right; margin: 0;">Made by TheJacob & Jerry</p>
+            <iframe width="545" height="316" src="https://trainz.ml:5443/WebRTCAppEE/play.html?name=trainz01" frameborder="0" allowfullscreen autoplay style="border: 2px solid #212529;"></iframe> <!-- width="560" height="315" -->
+        </div>
+    </div>
+
+    <div class="row" id="2ndRow">
+
+    </div>
     
-    <div class="container" style="float: left;">
 
-        <div class="row">
-            <div class="col" id="forward">
-                <h1 class="fa fa-chevron-up remote-control" style="font-size: xxx-large;"></h1>
-                <h1 class="controller-font">(W) Forward</h1>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col" id="idle">
-                <i class="fa fa-square remote-control" style="font-size: xxx-large; padding-left: 4px;"></i>
-                <h1 class="controller-font">(Space) Stop</h1>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col" id="backwards">
-                <i class="fa fa-chevron-down remote-control" style="font-size: xxx-large;"></i>
-                <h1 class="controller-font">(S) Backwards</h1>
-            </div>
-        </div>
+        
 
     </div>
     <script src="../static/bootstrap/js/bootstrap.min.js"></script>

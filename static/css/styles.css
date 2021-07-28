@@ -61,8 +61,14 @@ input:focus + .slider {
 .controller-font {
   display: inline-block;
   padding-left: 20px;
+  font-size: 35px;
 }
 
 .controller-pressed {
   color: blue;
+}
+
+.responsive-iframe {
+  width: 560px;
+  height: 315px;
 }
