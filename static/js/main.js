@@ -178,10 +178,13 @@ function startEngine(){
         },
         success:function()
         {
-        if(engine == false){
-            location.reload();
-        }
-        engine = true;
+            if(engine == false){
+                location.href = "/thanks_for_playing";
+            }
+            else {
+                engine = true;
+                timer();
+            }
         }
     })
 }
@@ -224,4 +227,33 @@ document.onkeydown = (e) => {
             break;
         }
     }
+}
+
+function timer(){
+    let seconds = 30;
+    let timerInterval = setInterval(() => {
+        console.log(seconds);
+        seconds--;
+        if(seconds < 1){
+            resetTrack();
+            document.getElementById("engine").addEventListener("click", (e) => {
+                engine = false;
+                document.getElementById("engine").checked = false;
+            });
+
+            $.ajax({
+                type:'POST',
+                url:'/startengine',
+                data:{ 
+                signal: false
+                },
+                success:function()
+                {
+                location.href = "/thanks_for_playing";
+                }
+            })
+
+            clearInterval(timerInterval);
+        }
+    }, 1000);
 }

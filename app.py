@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import Database
+import time
+import threading
 
 fireDB = Database.Firebase()
 mongoDB = Database.Mongo("mongodb+srv://thejacob:Komjatice0258@trainz.tverj.mongodb.net/trainzDB?retryWrites=true&w=majority",
@@ -117,16 +119,18 @@ def start_engine():
 	if request.method == "POST":
 		engine = True if request.form.get("signal") == "true" else False
 
-		if fireDB.get_data("track_status", "track01") > 0:
+		if not engine:
+			fireDB.update_data({"track_status": 0}, "track01")
+			session["engine"] = False
+			return redirect("thanks_for_playing")
+
+		elif fireDB.get_data("track_status", "track01") > 0:
 			return redirect("/waitingroom")
 
 		elif fireDB.get_data("track_status", "track01") == 0 and engine:
+			session["engine"] = True
 			fireDB.update_data({"track_status": 1}, "track01")
 			return ""
-
-		elif not engine:
-			fireDB.update_data({"track_status": 0}, "track01")
-			return redirect("thanks_for_playing")
 
 
 if __name__ == '__main__':
