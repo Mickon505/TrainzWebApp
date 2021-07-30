@@ -1,6 +1,5 @@
 import pyrebase
-import mysql.connector
-from mysql.connector import Error
+from pymongo import MongoClient
 
 
 class Firebase:
@@ -26,31 +25,46 @@ class Firebase:
         else:
             self.firebaseDB.push(data)
 
+    def get_data(self, data, child=None):
+        if child:
+            try:
+                return self.firebaseDB.child(child).get().val()[data]
 
-class MySQL:
-    def __init__(self):
-        try:
-            self.connection = mysql.connector.connect(host='thejacob.eu',
-                                                 database='trainz',
-                                                 user='trainz',
-                                                 password='Ymwfl@15chsk')
+            except KeyError:
+                return None
 
-            if self.connection.is_connected():
-                db_info = self.connection.get_server_info()
-                print("Connected to MySQL Server version ", db_info)
-                self.cursor = self.connection.cursor()
-                self.cursor.execute("select database();")
-                record = self.cursor.fetchone()
-                print("You're connected to database: ", record)
+        else:
+            try:
+                return self.firebaseDB.get().val()[data]
 
-        except Error as e:
-            print("Error while connecting to MySQL", e)
+            except KeyError:
+                return None
 
-        finally:
-            if self.connection.is_connected():
-                self.cursor.close()
-                self.connection.close()
-                print("MySQL connection is closed")
+    def update_data(self, data, child=None):
+        if child:
+            self.firebaseDB.child(child).update(data)
 
-    def create_table(self, table_name, content):
-        self.cursor.execute(f"CREATE TABLE {table_name} ({content})")
+        else:
+            self.firebaseDB.update(data)
+
+
+class Mongo:
+    def __init__(self, client, database=None, collection=None):
+        self.cluster = MongoClient(client)
+        self.db = None
+        self.col = None
+        if database and collection:
+            self.set_database(database, collection)
+
+    def set_database(self, db, col):
+        self.db = self.cluster[str(db)]
+        self.col = self.db[str(col)]
+
+    def add(self, post):
+        self.col.insert_one(post)
+
+    def get(self, post):
+        return self.col.find_one(post)
+
+    def update(self, post, _id):
+        self.col.replace_one({"_id": _id}, post)

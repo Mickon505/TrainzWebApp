@@ -7,20 +7,28 @@
     <title>TrainzController</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/fonts/font-awesome.min.css">
-    <!-- <link rel="stylesheet" href="../static/fonts/material-icons.min.css"> -->
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 
 <body>
-    <div class="row" id="1stRow" style="max-width: 460px;">
-        <div class="col">
+    <div class="row" id="firstRow" style="max-width: 460px;">
+        <div class="col" id="main-col">
             <label class="switch">
+                <input type="checkbox" id="engine">
+                <span class="slider round"></span>
+            </label>
+            <h1 class="controller-font">Start Engine</h1>
+            <br>
+            <strong class="controller-font" style="color: red;"><a href="/instructions">(READ BEFORE DRIVING)</a></strong>
+            <br>
+
+            <label class="switch" id="switch">
                 <input type="checkbox" id="chckbx">
                 <span class="slider round"></span>
             </label>
             <h1 class="controller-font">(D) Rail Road Switch</h1>
             
-            <div class="container" style="float: left;">
+            <div class="container" style="float: left; cursor: pointer;">
         
                 <div class="row">
                     <div class="col" id="forward">
@@ -52,7 +60,7 @@
         </div>
     </div>
 
-    <div class="row" id="2ndRow">
+    <div class="row" id="secondRow">
 
     </div>
     

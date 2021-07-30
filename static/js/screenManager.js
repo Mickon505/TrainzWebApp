@@ -1,6 +1,6 @@
 let iframe = document.getElementById("iframediv");
-let row_1 = document.getElementById("1stRow");
-let row_2 = document.getElementById("2ndRow");
+let row_1 = document.getElementById("firstRow");
+let row_2 = document.getElementById("secondRow");
 
 window.onresize = () => {
     if (window.innerWidth < 935){

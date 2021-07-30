@@ -1,4 +1,10 @@
 let columns = document.getElementsByClassName("col");
+let rrSwitch = document.getElementById("chckbx");
+let forwardButton = document.getElementById("forward");
+let stopButton = document.getElementById("idle");
+let backwardsButton = document.getElementById("backwards");
+let engine = false;
+
 
 function resolution_changed(){
     //console.log("yes, screen changed");
@@ -33,16 +39,38 @@ function resolution_changed(){
 //window.addEventListener("resize", resolution_changed)
 
 
-let forwardButton = document.getElementById("forward");
-let stopButton = document.getElementById("idle");
-let backwardsButton = document.getElementById("backwards");
+forwardButton.addEventListener("click", (e) => {
+    if (engine){
+        highlightForward();
+        start();
+    }
+});
 
+stopButton.addEventListener("click", (e) => {
 
-forwardButton.addEventListener("click", highlightForward);
+    if (engine){
+        highlightIdle();
+        stop();
+    }
+});
 
-stopButton.addEventListener("click", highlightIdle);
+backwardsButton.addEventListener("click", (e) => {
+    if (engine){
+        highlightBackwards();
+        reverse();
+    }
+    
+});
 
-backwardsButton.addEventListener("click", highlightBackwards);
+document.getElementById("switch").addEventListener("click", (e) => {
+    if (engine){
+        console.log(rrSwitch.checked)
+        railRoadSwitch();
+    }
+    else {
+        rrSwitch.checked = false;
+    }
+});
 
 function highlightForward(){
     stopButton.classList.remove("controller-pressed");
@@ -62,13 +90,19 @@ function highlightBackwards(){
     forwardButton.classList.remove("controller-pressed");
 }
 
-
-let rrSwitch = document.getElementById("chckbx");
-
-document.getElementsByClassName("switch")[0].addEventListener("click", (e) => {
-    console.log(rrSwitch.checked)
+function resetTrack(){
+    highlightIdle();
+    stop();
+    rrSwitch.checked = false;
     railRoadSwitch();
+}
+
+window.onload = resetTrack
+
+document.getElementById("engine").addEventListener("click", (e) => {
+    startEngine();
 });
+
 
 // SERVER COMMUNICATION
 function start(){
@@ -132,33 +166,62 @@ function railRoadSwitch(){
     })
 }
 
+function startEngine(){
+    engine = document.getElementById("engine").checked;
+    
+
+    $.ajax({
+        type:'POST',
+        url:'/startengine',
+        data:{ 
+        signal: engine
+        },
+        success:function()
+        {
+        if(engine == false){
+            location.reload();
+        }
+        engine = true;
+        }
+    })
+}
+
 document.onkeydown = (e) => {
-    switch(e.key){
-        case " ":
-            console.log("Train Status: Idle");
-            highlightIdle();
-            stop();
-        break;
-
-        case "w":
-            console.log("Train Status: Going Forward");
-            highlightForward();
-            start();
-        break;
-
-        case "s":
-            console.log("Train Status: Going Backwards");
-            highlightBackwards();
-            reverse();
-        break;
-
-        case "d":
-            console.log("Rail Road Switch Status: switched");
-            rrSwitch.checked = !rrSwitch.checked;
-            railRoadSwitch();
-
-        default:
-            console.log(e.key);
-        break;
+    console.log(engine);
+    if (engine){
+        switch(e.key){
+            case " ":
+                console.log("Train Status: Idle");
+                highlightIdle();
+                stop();
+            break;
+    
+            case "w":
+                console.log("Train Status: Going Forward");
+                highlightForward();
+                start();
+            break;
+    
+            case "s":
+                console.log("Train Status: Going Backwards");
+                highlightBackwards();
+                reverse();
+            break;
+    
+            case "r":
+                console.log("Rail Road Switch Status: switched");
+                rrSwitch.checked = !rrSwitch.checked;
+                railRoadSwitch();
+    
+            case "e":
+                console.log("Train Status: Idle");
+                highlightIdle();
+                stop();
+            break;
+    
+            default:
+                console.log(e.key);
+            break;
+        }
     }
 }
